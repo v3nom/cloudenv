@@ -6,6 +6,8 @@ import (
 )
 
 func TestDefault(t *testing.T) {
+	isGCEOverride = false
+
 	ctx := context.Background()
 	err := Init(ctx, Config{
 		Datastore:  false,
@@ -22,6 +24,8 @@ func TestDefault(t *testing.T) {
 }
 
 func TestDataStoreClient(t *testing.T) {
+	isGCEOverride = false
+
 	ctx := context.Background()
 
 	projectID = "test"
@@ -57,6 +61,8 @@ func TestDataStoreClient(t *testing.T) {
 }
 
 func TestError(t *testing.T) {
+	isGCEOverride = false
+
 	projectID = ""
 	ctx := context.Background()
 	err := Init(ctx, Config{

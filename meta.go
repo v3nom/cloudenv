@@ -12,6 +12,7 @@ var isDevAppServer bool
 var projectID string
 var zoneID string
 var defaultServiceAccountEmail string
+var isGCEOverride = true
 
 // IsDev is dev server
 func IsDev() bool {
@@ -42,8 +43,12 @@ func DefaultEmail() string {
 	return defaultServiceAccountEmail
 }
 
+func isGCE() bool {
+	return metadata.OnGCE() && isGCEOverride
+}
+
 func loadMetadata() error {
-	if !metadata.OnGCE() {
+	if !isGCE() {
 		isDevAppServer = true
 		return nil
 	}
