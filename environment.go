@@ -8,6 +8,7 @@ import (
 type Config struct {
 	Datastore  bool
 	CloudTasks bool
+	Logging    bool
 }
 
 type contextKey string
@@ -40,6 +41,14 @@ func Init(ctx context.Context, config Config) error {
 		appContext[cloudtasksClientKey] = cloudtasksClient
 	}
 
+	if config.Logging {
+		err := initLogging(ctx)
+		if err != nil {
+			return err
+		}
+		appContext[loggingClientKey] = loggingClient
+	}
+
 	return nil
 }
 
@@ -52,6 +61,10 @@ func Dispose() {
 	if cloudtasksClient != nil {
 		cloudtasksClient.Close()
 		cloudtasksClient = nil
+	}
+	if loggingClient != nil {
+		loggingClient.Close()
+		loggingClient = nil
 	}
 }
 
