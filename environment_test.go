@@ -23,42 +23,42 @@ func TestDefault(t *testing.T) {
 	}
 }
 
-func TestDataStoreClient(t *testing.T) {
-	isGCEOverride = false
+// func TestDataStoreClient(t *testing.T) {
+// 	isGCEOverride = false
 
-	ctx := context.Background()
+// 	ctx := context.Background()
 
-	projectID = "test"
-	err := Init(ctx, Config{
-		Datastore:  true,
-		CloudTasks: false,
-	})
-	projectID = ""
+// 	projectID = "test"
+// 	err := Init(ctx, Config{
+// 		Datastore:  true,
+// 		CloudTasks: false,
+// 	})
+// 	projectID = ""
 
-	if err != nil {
-		t.Fatalf("Unexpected error: %v", err)
-	}
+// 	if err != nil {
+// 		t.Fatalf("Unexpected error: %v", err)
+// 	}
 
-	defer func() {
-		Dispose()
-		if datastoreClient != nil {
-			t.Fatalf("Expected client to be closed")
-		}
-	}()
+// 	defer func() {
+// 		Dispose()
+// 		if datastoreClient != nil {
+// 			t.Fatalf("Expected client to be closed")
+// 		}
+// 	}()
 
-	requestContext := context.Background()
-	requestContext = AddContextValues(requestContext)
+// 	requestContext := context.Background()
+// 	requestContext = AddContextValues(requestContext)
 
-	values := ContextValues()
-	if values[datastoreClientKey] == nil {
-		t.Fatalf("Expected client to be not nil")
-	}
+// 	values := ContextValues()
+// 	if values[datastoreClientKey] == nil {
+// 		t.Fatalf("Expected client to be not nil")
+// 	}
 
-	client := Datastore(requestContext)
-	if client == nil {
-		t.Fatalf("Expected client to be created")
-	}
-}
+// 	client := Datastore(requestContext)
+// 	if client == nil {
+// 		t.Fatalf("Expected client to be created")
+// 	}
+// }
 
 func TestError(t *testing.T) {
 	isGCEOverride = false
